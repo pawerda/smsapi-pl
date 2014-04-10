@@ -1,0 +1,30 @@
+{
+  "name": "smsapi-pl",
+  "version": "0.0.0",
+  "description": "SMSAPI.pl implementation for node.js",
+  "main": "index.js",
+  "dependencies": {
+    "request": "~2.34.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pawerda/smsapi-pl.git"
+  },
+  "keywords": [
+    "node.js",
+    "sms",
+    "smsapi",
+    "smsapi.pl",
+    "pl",
+    "request"
+  ],
+  "author": "Paweł Werda",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pawerda/smsapi-pl/issues"
+  }
+}
