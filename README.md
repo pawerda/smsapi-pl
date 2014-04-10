@@ -44,13 +44,10 @@ var sms = require('smsapi-pl'),
 var msg = sms.Message({
                       from: 'some_name',
                       encoding: 'utf-8',
-                      template: 'template_name'
                       });
 sender.password('your_password');
 
-msg.to(numbers);
-msg.params(['John','Maria','Whoever'], ['CP2255', 'CP2572', 'CP3673']);
-msg.test();
+msg.to(numbers).template('new').test().params(['John','Maria','Whoever'], ['CP2255', 'CP2572', 'CP3673']);
                        
 sender.send(msg, function(err, cb){
   if(err){
@@ -88,6 +85,8 @@ msg.**params(param1, param2, param3, param4)** - parameters: strings, numbers or
 ###TODO
 
 Create methods for other options provided by smsapi.pl
+
+Sending multiple messages
 
 Data validation
 
