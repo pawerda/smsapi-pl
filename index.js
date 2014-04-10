@@ -1,4 +1,4 @@
 
 
 exports.Message = require('./lib/message.js');
-exports.Config = require('./lib/config.js');
+exports.API = require('./lib/config.js');
