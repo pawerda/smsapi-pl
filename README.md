@@ -47,7 +47,8 @@ var msg = sms.Message({
                       });
 sender.password('your_password');
 
-msg.to(numbers).template('new').test().params(['John','Maria','Whoever'], ['CP2255', 'CP2572', 'CP3673']);
+msg.to(numbers).template('new').test();
+msg.params(['John','Maria','Whoever'], ['CP2255', 'CP2572', 'CP3673']);
                        
 sender.send(msg, function(err, cb){
   if(err){
