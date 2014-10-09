@@ -19,8 +19,8 @@ var sms = require('smsapi-pl'),
               password: 'your_pass'
               };
               
-var sender = sms.API(config);
-var msg = sms.Message({
+var sender = new sms.API(config);
+var msg = new sms.Message({
                        to: '+48500500500'
                        message: 'Hello world!'
                        });
@@ -38,10 +38,10 @@ sender.send(msg, function(err, cb){
 ######Using built-in methods or mixing with objects passed to constructors
 ```javascript
 var sms = require('smsapi-pl'),
-    sender = sms.API({username: 'your username'}),
+    sender = new sms.API({username: 'your username'}),
     numbers = ['+48500000000', 600000000, 48600000000];
     
-var msg = sms.Message({
+var msg = new sms.Message({
                       from: 'some_name',
                       encoding: 'utf-8',
                       });
