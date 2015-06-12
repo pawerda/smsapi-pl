@@ -36,10 +36,12 @@ var sender_config = {
 ######OR set app scope sender object
 
 ```javascript
-var sender = sms.setSender(sender_config);
-    
-    //sms.setSender is setting (and returning) one sender instance for app scope as sms.sender 
-    //now require('smsapi-pl') has your sender instance 
+sms.setSender(sender_config);
+var sender = sms.sender;
+
+    //sms.setSender is setting one sender instance for app scope as sms.sender
+    //sms.sender is now sms.API instance 
+    //require('smsapi-pl') has now your sender instance 
 ```
 ####Second step:
 ######Compose messages
