@@ -3,60 +3,78 @@ smsapi-pl
 
 Implementation of SMSAPI.pl for node.js
 With this package you can easly send SMS by Polish provider www.smsapi.pl
-Let's start short guide.
+Version 0.1.0
 
 ##Usage:
 ```text
 $npm install smsapi-pl
 ```
-####First example:
-######Passing object to constructor. You can put everything what is provided by smsapi.pl for HTTPS protocol http://www.smsapi.pl/sms-api/interfejs-https
+####then:
 
 ```javascript
-var sms = require('smsapi-pl'),
-    config = {
-              username: 'your username',
-              password: 'your_pass'
-              };
-              
-var sender = new sms.API(config);
-var msg = new sms.Message({
-                       to: '+48500500500'
-                       message: 'Hello world!'
-                       });
-                       
-sender.send(msg, function(err, cb){
-  if(err){
-    console.log(err.message);
-  } else {
-    console.log(cb);
-  }
-});
+var sms = require('smsapi-pl');
 ```
 
-####Second example 
-######Using built-in methods or mixing with objects passed to constructors
-```javascript
-var sms = require('smsapi-pl'),
-    sender = new sms.API({username: 'your username'}),
-    numbers = ['+48500000000', 600000000, 48600000000];
-    
-var msg = new sms.Message({
-                      from: 'some_name',
-                      encoding: 'utf-8',
-                      });
-sender.password('your_password');
+You can put anything provided by smsapi.pl for HTTPS protocol as objects
+http://www.smsapi.pl/sms-api/interfejs-https
 
-msg.to(numbers).template('new').test();
+####First step:
+######Create local sender object.
+
+```javascript
+var sender_config = {
+        username: 'your username',
+        password: 'your_pass'
+        encoding: 'utf-8',
+        normalize: 1
+    },
+    sender = new sms.API(sender_config);
+    
+    //This is local sender variable. 
+    //You can set username and password later using build-in methods
+```
+######OR set app scope sender object
+
+```javascript
+var sender = sms.setSender(sender_config);
+    
+    //sms.setSender is setting (and returning) one sender instance for app scope as sms.sender 
+    //now require('smsapi-pl') has your sender instance 
+```
+####Second step:
+######Compose messages
+
+```javascript
+var msg = {
+    from: 'your_name',
+    to: '+48500500500',
+    message:'Hello world!'
+};
+
+    //OR
+
+var msg = new sms.Message(msg)
+
+    //OR
+
+var msg = new sms.Message();
+
+msg.to(['+48500000000', 600000000, 48600000000]).template('new').test();
 msg.params(['John','Maria','Whoever'], ['CP2255', 'CP2572', 'CP3673']);
-                       
-sender.send(msg, function(err, cb){
-  if(err){
-    console.log(err.message);
-  } else {
-    console.log(cb);
-  }
+
+    //creating Message instances is useful when you are sending arrays  
+```
+
+####Third step:
+######Send it 
+
+
+```javascript
+sender.send(msg, function(err, response){
+    console.log(err, response)
 });
+
+    //Doesnt matter if msg is raw object or Message instance
 ```
 
 ###Implemented methods
@@ -80,14 +98,7 @@ msg.**test()** - dry run (simulates SMS sending)
 
 msg.**template(template_name)** - template name setter (templates provided by smsapi.pl)
 
-msg.**params(param1, param2, param3, param4)** - parameters: strings, numbers or arrays. Parameters for templates.
+msg.**params(*args)** - strings, numbers or arrays. Parameters for templates.
 
 
-###TODO
-
-Create methods for other options provided by smsapi.pl
-
-Sending multiple messages
-
-Data validation
-
+####Check test.js
