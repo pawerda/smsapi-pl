@@ -47,7 +47,7 @@ var sender = sms.sender;
 ######Compose messages
 
 ```javascript
-var msg = {
+var msg_obj = {
     from: 'your_name',
     to: '+48500500500',
     message:'Hello world!'
@@ -55,7 +55,7 @@ var msg = {
 
     //OR
 
-var msg = new sms.Message(msg)
+var msg = new sms.Message(msg_obj)
 
     //OR
 
@@ -72,7 +72,7 @@ msg.params(['John','Maria','Whoever'], ['CP2255', 'CP2572', 'CP3673']);
 
 
 ```javascript
-sender.send(msg, function(err, response){
+sender.send(msg||msg_obj, function(err, response){
     console.log(err, response)
 });
 
@@ -83,7 +83,7 @@ sender.send(msg, function(err, response){
 
 ####API (sender object from examples)
 
-sender.**send(msg_object, callback)** - validates username and password existance, catches errors from error codes, sends it
+sender.**send(msg_object, callback)** - validates username and password existance, catches errors
 
 sender.**username(username)** - username setter
 
@@ -101,6 +101,7 @@ msg.**test()** - dry run (simulates SMS sending)
 msg.**template(template_name)** - template name setter (templates provided by smsapi.pl)
 
 msg.**params(*args)** - strings, numbers or arrays. Parameters for templates.
+
 
 
 ####Check test.js
