@@ -2,106 +2,117 @@ smsapi-pl
 =========
 
 Implementation of SMSAPI.pl for node.js
-With this package you can easly send SMS by Polish provider www.smsapi.pl
-Version 0.1.0
+With this package you can easily send SMS by Polish provider www.smsapi.pl
+Version 0.2.0
 
-##Usage:
+### news:
+* send promise
+
+## Usage:
 ```text
 $npm install smsapi-pl
 ```
-####then:
+#### then:
 
 ```javascript
 var sms = require('smsapi-pl');
 ```
 
-You can put anything provided by smsapi.pl for HTTPS protocol as objects
+You can put anything provided by smsapi.pl for HTTPS protocol
 http://www.smsapi.pl/sms-api/interfejs-https
 
-####First step:
-######Create local sender object.
+#### First step:
+
+##### Create config object
 
 ```javascript
-var sender_config = {
-        username: 'your username',
-        password: 'your_pass'
-        encoding: 'utf-8',
-        normalize: 1
-    },
-    sender = new sms.API(sender_config);
-    
-    //This is local sender variable. 
-    //You can set username and password later using build-in methods
+var senderConfig = {
+    username: 'yourUsername',
+    password: 'yourPass'
+    encoding: 'utf-8',
+    normalize: 1
+};
 ```
-######OR set app scope sender object
+
+##### Create local sender object.
 
 ```javascript
-sms.setSender(sender_config);
-var sender = sms.sender;
-
-    //sms.setSender is setting one sender instance for app scope as sms.sender
-    //sms.sender is now sms.API instance 
-    //require('smsapi-pl') has now your sender instance 
+var sender = new sms.API(senderConfig)
 ```
-####Second step:
-######Compose messages
+
+##### OR set app scope sender object
 
 ```javascript
-var msg_obj = {
-    from: 'your_name',
+
+var sender = sms.setSender(senderConfig);
+
+//sender == sms.sender // true
+//sender instanceof sms.API //true
+//every next require('smsapi-pl').sender is this sender object
+```
+
+#### Second step:
+
+##### Compose messages
+
+```javascript
+var msgOptions = {
+    from: 'yourName',
     to: '+48500500500',
     message:'Hello world!'
 };
 
-    //OR
+//OR
 
-var msg = new sms.Message(msg_obj)
+var msg = new sms.Message(msgOptions)
 
-    //OR
+//OR
 
 var msg = new sms.Message();
 
-msg.to(['+48500000000', 600000000, 48600000000]).template('new').test();
-msg.params(['John','Maria','Whoever'], ['CP2255', 'CP2572', 'CP3673']);
-
-    //creating Message instances is useful when you are sending arrays  
+msg
+  .to(['+48500000000', 600000000, 48600000000])
+  .params(['John','Maria','Whoever'], ['CP2255', 'CP2572', 'CP3673']);
+  .template('new')
+  .test();
+  
+//creating Message instances is useful when you are sending arrays  
 ```
 
-####Third step:
-######Send it 
+#### Third step:
 
+##### Send it... 
+
+It doesnt matter if you are sending Message instance or raw object. 
 
 ```javascript
-sender.send(msg||msg_obj, function(err, response){
+sender.send(msg || msgOptions, function(err, response){
     console.log(err, response)
 });
-
-    //Doesnt matter if msg is raw object or Message instance
 ```
 
-###Implemented methods
+##### OR get send promise
+```javascript
+var sendPromise = sender.promise(msg || msgOptions)
 
-####API (sender object from examples)
+```
 
-sender.**send(msg_object, callback)** - validates username and password existance, catches errors
+### Implemented methods
 
-sender.**username(username)** - username setter
+#### API (sender object from examples)
 
-sender.**password(password)** - password setter
+* sender.**send(msg || msgObject, callback)** - validates username and password existance, catches errors
+* sender.**promise(msg || msgObject)** - returns sender.**send** promise
+* sender.**username('username')** - username setter
+* sender.**password('password')** - password setter
+* sender.**url('url')** - api url request setter (default https://ssl.smsapi.pl/sms.do)
 
-sender.**url(url)** - api url request setter (default https://ssl.smsapi.pl/sms.do)
+#### Message (msg object from examples)
 
-####Message (msg object from examples)
-msg.**to(numbers)** - numbers: string, number or array. If number length != 9 or 11 ignores it.
+* msg.**to(numberOrNumbers)** - numbers: string, number or array. If number length != 9 or 11 ignores it.
+* msg.**message('someMessage')** - message setter
+* msg.**test()** - dry run (simulates SMS sending)
+* msg.**template('templateName')** - template name setter (templates provided by smsapi.pl)
+* msg.**params(*args)** - strings, numbers or arrays. Parameters for templates.
 
-msg.**message(some_message)** - message setter
-
-msg.**test()** - dry run (simulates SMS sending)
-
-msg.**template(template_name)** - template name setter (templates provided by smsapi.pl)
-
-msg.**params(*args)** - strings, numbers or arrays. Parameters for templates.
-
-
-
-####Check test.js
+#### Check test.js

@@ -1,10 +1,11 @@
 {
   "name": "smsapi-pl",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "SMSAPI.pl implementation for node.js",
   "main": "index.js",
   "dependencies": {
     "extend": "~2.0.0",
+    "q": "*",
     "request": "~2.34.0",
     "underscore": "^1.8.3"
   },
@@ -21,6 +22,7 @@
     "sms",
     "smsapi",
     "smsapi.pl",
+    "smsapi-pl",
     "pl"
   ],
   "author": "Paweł Werda",
