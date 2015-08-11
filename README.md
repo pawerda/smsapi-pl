@@ -6,7 +6,7 @@ With this package you can easily send SMS by Polish provider www.smsapi.pl
 Version 0.2.0
 
 ### news:
-* send promise
+* added send promise
 
 ## Usage:
 ```text
@@ -101,8 +101,8 @@ var sendPromise = sender.promise(msg || msgOptions)
 
 #### API (sender object from examples)
 
-* sender.**send(msg || msgObject, callback)** - validates username and password existance, catches errors
-* sender.**promise(msg || msgObject)** - returns sender.**send** promise
+* sender.**send(msg, callback)** - validates username and password existance, catches errors
+* sender.**promise(msg)** - returns sender.**send** promise
 * sender.**username('username')** - username setter
 * sender.**password('password')** - password setter
 * sender.**url('url')** - api url request setter (default https://ssl.smsapi.pl/sms.do)
